@@ -16,6 +16,22 @@ exports.getExpenses = async (req, res) => {
   }
 };
 
+// Get all expenses for a specific user
+exports.getExpenses = async (req, res) => {
+  const userId = req.query.userId;
+
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+
+  try {
+    const expenses = await Expense.find({ userId });
+    res.status(200).json(expenses);
+  } catch (error) {
+    handleError(res, error);
+  }
+};
+
 // Create new expense
 exports.createExpense = async (req, res) => {
   try {
