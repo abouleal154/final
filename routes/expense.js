@@ -3,7 +3,7 @@ const router = express.Router();
 const expenseController = require("../controller/expense");
 
 // GET all expenses
-router.get("/expenses", expenseController.getExpenses);
+router.get("/expenses", expenseController.getAllExpenses);
 // GET all expenses for a specific user
 router.get("/expenses", expenseController.getExpenses);
 
