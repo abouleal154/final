@@ -18,7 +18,7 @@ exports.getAllExpenses = async (req, res) => {
 
 // Get all expenses for a specific user
 exports.getExpenses = async (req, res) => {
-  const userId = req.query.userId;
+  const userId = req.params.userId; // Fetching userId from URL parameters
 
   if (!userId) {
     return res.status(400).json({ message: "User ID is required" });
