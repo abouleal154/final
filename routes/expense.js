@@ -5,7 +5,7 @@ const expenseController = require("../controller/expense");
 // GET all expenses
 router.get("/expenses", expenseController.getAllExpenses);
 // GET all expenses for a specific user
-router.get("/expenses/:id", expenseController.getExpenses);
+router.get("/expenses/:userId", expenseController.getExpenses);
 
 // POST create new expense
 router.post("/expenses", expenseController.createExpense);
