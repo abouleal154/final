@@ -1,4 +1,5 @@
 const Expense = require("../models/expense");
+const Budget = require("../models/budget");
 
 // Helper function to handle errors
 const handleError = (res, error) => {
@@ -32,7 +33,7 @@ exports.getExpenses = async (req, res) => {
   }
 };
 
-// Create new expense
+// Create new expense and update the related budget
 exports.createExpense = async (req, res) => {
   try {
     const { userId, categoryId, amount, date, description } = req.body;
@@ -44,6 +45,14 @@ exports.createExpense = async (req, res) => {
 
     const expense = new Expense(req.body);
     await expense.save();
+
+    // Update the budget
+    const budget = await Budget.findOne({ userId });
+    if (budget) {
+      budget.totalAmount -= amount;
+      await budget.save();
+    }
+
     res.status(201).json(expense);
   } catch (error) {
     handleError(res, error);
