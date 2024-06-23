@@ -16,13 +16,12 @@ exports.getAllBudgets = async (req, res) => {
   }
 };
 
-//get all budget for a specific user
+// Get all budgets for a specific user
 exports.getBudgetsByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
     const budgets = await Budget.find({ userId });
 
-    // Check if budgets exist
     if (budgets.length === 0) {
       return res
         .status(404)
@@ -40,7 +39,6 @@ exports.createBudget = async (req, res) => {
   try {
     const { userId, totalAmount, startDate, endDate } = req.body;
 
-    // Validate input
     if (!userId || !totalAmount || !startDate || !endDate) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -58,7 +56,6 @@ exports.getBudgetById = async (req, res) => {
   try {
     const budget = await Budget.findById(req.params.id);
 
-    // Check if budget exists
     if (!budget) {
       return res.status(404).json({ message: "Budget not found" });
     }
@@ -77,7 +74,6 @@ exports.updateBudget = async (req, res) => {
       runValidators: true, // Ensure validation rules are applied on update
     });
 
-    // Check if budget exists
     if (!budget) {
       return res.status(404).json({ message: "Budget not found" });
     }
@@ -93,7 +89,6 @@ exports.deleteBudget = async (req, res) => {
   try {
     const budget = await Budget.findByIdAndDelete(req.params.id);
 
-    // Check if budget exists
     if (!budget) {
       return res.status(404).json({ message: "Budget not found" });
     }
