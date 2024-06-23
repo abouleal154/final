@@ -74,12 +74,6 @@ exports.updateUser = async (req, res) => {
       }
     }
 
-    // If password is being updated, hash it
-    if (req.body.password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(req.body.password, salt);
-    }
-
     // Save the updated user
     await user.save();
 
