@@ -11,6 +11,9 @@ router.post("/", budgetController.createBudget);
 // Get a budget by ID
 router.get("/:id", budgetController.getBudgetById);
 
+// Get a budget by userID
+router.get("/:id", budgetController.getBudgetsByUserId);
+
 // Update a budget
 router.put("/:id", budgetController.updateBudget);
 

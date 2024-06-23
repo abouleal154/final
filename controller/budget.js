@@ -16,6 +16,25 @@ exports.getAllBudgets = async (req, res) => {
   }
 };
 
+//get all budget for a specific user
+exports.getBudgetsByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const budgets = await Budget.find({ userId });
+
+    // Check if budgets exist
+    if (budgets.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No budgets found for this user" });
+    }
+
+    res.status(200).json(budgets);
+  } catch (error) {
+    handleError(res, error);
+  }
+};
+
 // Create a new budget
 exports.createBudget = async (req, res) => {
   try {
