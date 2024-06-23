@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require("bcryptjs");
 
 // Helper function to handle errors
 const handleError = (res, error) => {
@@ -59,15 +60,22 @@ exports.getUserById = async (req, res) => {
 // Update user
 exports.updateUser = async (req, res) => {
   try {
-    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
-      new: true,
-      runValidators: true, // Ensure validation rules are applied on update
-    });
+    const user = await User.findById(req.params.id);
 
     // Check if user exists
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+    // Update fields
+    for (const key in req.body) {
+      if (req.body.hasOwnProperty(key)) {
+        user[key] = req.body[key];
+      }
+    }
+
+    // Save the updated user
+    await user.save();
 
     res.status(200).json(user);
   } catch (error) {
