@@ -94,7 +94,7 @@ exports.updateExpense = async (req, res) => {
   }
 };
 
-// Delete expense
+// Delete expense and update the related budget
 exports.deleteExpense = async (req, res) => {
   try {
     const expense = await Expense.findByIdAndDelete(req.params.id);
@@ -102,6 +102,13 @@ exports.deleteExpense = async (req, res) => {
     // Check if expense exists
     if (!expense) {
       return res.status(404).json({ message: "Expense not found" });
+    }
+
+    // Restore the amount to the user's budget
+    const budget = await Budget.findOne({ userId: expense.userId });
+    if (budget) {
+      budget.totalAmount += expense.amount;
+      await budget.save();
     }
 
     res.status(200).json({ message: "Expense deleted successfully" });
