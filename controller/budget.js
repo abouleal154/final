@@ -37,9 +37,9 @@ exports.getBudgetsByUserId = async (req, res) => {
 // Create a new budget
 exports.createBudget = async (req, res) => {
   try {
-    const { userId, totalAmount, startDate, endDate } = req.body;
+    const { userId, totalAmount, startDate, description } = req.body;
 
-    if (!userId || !totalAmount || !startDate || !endDate) {
+    if (!userId || !totalAmount || !startDate || !description) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
