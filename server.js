@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors= require('cors');
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
@@ -13,6 +14,12 @@ const budgetRoute = require("./routes/budget");
 const categoryRoute = require("./routes/category");
 
 app.use(bodyParser.json());
+
+app.use.cors({
+  origin:"http://localhost:3000",
+  credentials:true,
+})
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
